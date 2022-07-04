@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="module" src="script.js"> </script>
+        <link rel='stylesheet' href='style.css'>
+        <title>Badminton Queue</title>
+        <link rel="icon" type="image/x-icon" href="/media/badminton.png">
+    </head>
+    <body>
+       <div class="header">
+            <h1>Badminton Queue System</h1>
+       </div>
+
+       <div class="queue">
+            <table>
+                <tr>
+                    <td style="text-align:center" colspan="2">Time</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center" colspan="2">Court 1</td>
+                </tr>
+                <tr>
+                    <td>On Court: </td>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td style="text-align:center" colspan="2">Time</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center" colspan="2">Court 1</td>
+                </tr>
+                <tr>
+                    <td>On Court: </td>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td style="text-align:center" colspan="2">Time</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center" colspan="2">Court 1</td>
+                </tr>
+                <tr>
+                    <td>On Court: </td>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td style="text-align:center" colspan="2">Time</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center" colspan="2">Court 1</td>
+                </tr>
+                <tr>
+                    <td>On Court: </td>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                </tr>
+            </table>
+       </div>
+
+        <div id="actions">
+            <div id="add">
+                    <h2>Add to Queue</h2>
+                    <form id="addForm">
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                        <!-- Fix this! -->
+                        <div class="formSubmit">
+                            <select name="Select Court" id="selectCourtAdd">
+                                <option value="Court 1">Court 1</option>
+                                <option value="Court 2">Court 2</option>
+                                <option value="Court 3">Court 3</option>
+                                <option value="Court 4">Court 4</option>
+                            </select>
+                            <button type="submit">Merge to Court</button>
+                            <button type="submit">Join Queue</button>
+                        </div>
+                    </form>
+            </div>
+                
+            <div>
+                <h2>Sign Up</h2>
+                <form id="signUpForm">
+                    Name
+                    <input type="text" name="Name">
+                </form>
+                <br>
+                <div class="formSubmit">
+                <!-- FIX THIS-->
+                <button onclick="">Submit</button>
+                </div>
+            </div>
+
+            <div id="remove">
+                    <h2>Remove From Queue</h2>
+                    <form id="removeForm">
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                        Name
+                        <input type="text" name="Name">
+                        Password
+                        <input type="password" name="Password">
+                        <br><br>
+                    </form>
+                    <div class="formSubmit">
+                        <select name="Select Court" id="selectCourtAdd">
+                            <option value="Court 1">Court 1</option>
+                            <option value="Court 2">Court 2</option>
+                            <option value="Court 3">Court 3</option>
+                            <option value="Court 4">Court 4</option>
+                        </select>
+                        <button type="submit">Remove From Court</button>
+                    </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+
+    </footer>
+</html>
