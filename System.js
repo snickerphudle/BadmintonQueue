@@ -1,5 +1,6 @@
 class System {
-    constructor() {
+    constructor(courts, ) {
+        this.courts = courts
         
     }
 }

@@ -100,57 +100,61 @@
         <div id="actions">
             <div id="add">
                     <h2>Add to Queue</h2>
-                    <form id="addForm">
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+                    <form id="addForm" method="post" action="">
+
+                        <label for="addName1">Name</label>
+                        <input type="text" name="addName1" id="addName1">
+                        <label for="addPass1">Password</label>
+                        <input type="password" name="addPass1" id="addPass1">
                         <br><br>
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+
+                        <label for="addName2">Name</label>
+                        <input type="text" name="addName2" id="addName2">
+                        <label for="addPass2">Password</label>
+                        <input type="password" name="addPass2" id="addPass2">
                         <br><br>
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+
+                        <label for="addName3">Name</label>
+                        <input type="text" name="addName3" id="addName3">
+                        <label for="addPass3">Password</label>
+                        <input type="password" name="addPass3" id="addPass3">
                         <br><br>
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+
+                        <label for="addName4">Name</label>
+                        <input type="text" name="addName4" id="addName4">
+                        <label for="addPass4">Password</label>
+                        <input type="password" name="addPass4" id="addPass4">
                         <br><br>
+
                         <!-- Fix this! -->
                         <div class="formSubmit">
                             <select name="Select Court" id="selectCourtAdd">
-                                <option value="Court 1">Court 1</option>
-                                <option value="Court 2">Court 2</option>
-                                <option value="Court 3">Court 3</option>
-                                <option value="Court 4">Court 4</option>
+                                <option value="1">Court 1</option>
+                                <option value="2">Court 2</option>
+                                <option value="3">Court 3</option>
+                                <option value="4">Court 4</option>
                             </select>
-                            <button type="submit">Merge to Court</button>
-                            <button type="submit">Join Queue</button>
+                            <button id="mergeButton">Merge to Court</button>
+                            <button id="joinButton">Join Queue</button>
                         </div>
                     </form>
             </div>
                 
-            <div>
+            <div id="signUp">
                 <h2>Sign Up</h2>
-                <form id="signUpForm">
-                    Name
-                    <input type="text" name="Name">
+                <form id="signUpForm" method="post" action=''>
+                    <label for="signUpName">Name</label>
+                    <input type="text" name="signUpName" id="signUpName"/>
+                    <br><br>
+                    <div class="formSubmit">
+                        <button id='signUpButton' name="signUpButton">Sign Up</button>
+                    </div>
                 </form>
-                <br>
-                <div class="formSubmit">
-                <!-- FIX THIS-->
-                <button onclick="">Submit</button>
-                </div>
             </div>
 
             <div id="remove">
                     <h2>Remove From Queue</h2>
-                    <form id="removeForm">
+                    <form id="removeForm" method="post" action="">
                         Name
                         <input type="text" name="Name">
                         Password
@@ -179,7 +183,7 @@
                             <option value="Court 3">Court 3</option>
                             <option value="Court 4">Court 4</option>
                         </select>
-                        <button type="submit">Remove From Court</button>
+                        <button type="submit" id="removeButton">Remove From Court</button>
                     </div>
             </div>
         </div>
