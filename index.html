@@ -14,8 +14,8 @@
             <h1>Badminton Queue System</h1>
        </div>
 
-       <div class="queue">
-            <table>
+       <div class="queue" id="queues">
+            <!-- <table>
                 <tr>
                     <td style="text-align:center" colspan="2">Time</td>
                 </tr>
@@ -94,7 +94,7 @@
                 <tr>
                     <td>3.</td>
                 </tr>
-            </table>
+            </table> -->
        </div>
 
         <div id="actions">
@@ -129,10 +129,10 @@
                         <!-- Fix this! -->
                         <div class="formSubmit">
                             <select name="Select Court" id="selectCourtAdd">
-                                <option value="1">Court 1</option>
+                                <!-- <option value="1">Court 1</option>
                                 <option value="2">Court 2</option>
                                 <option value="3">Court 3</option>
-                                <option value="4">Court 4</option>
+                                <option value="4">Court 4</option> -->
                             </select>
                             <button id="mergeButton">Merge to Court</button>
                             <button id="joinButton">Join Queue</button>
@@ -145,13 +145,29 @@
                 <form id="signUpForm" method="post" action=''>
                     <label for="signUpName">Name</label>
                     <input type="text" name="signUpName" id="signUpName"/>
-                    <br><br>
+                    <button id='signUpButton' name="signUpButton">Sign Up</button>
+                </form>
+
+                <br>
+
+                <h2>Admin Tools</h2>
+
+                <form id="adminForm" method="post" action=''>
                     <div class="formSubmit">
-                        <button id='signUpButton' name="signUpButton">Sign Up</button>
+                        <button id='addCourtButton' name="addCourtButton">Add Court</button>
+                        <button id='removeCourtButton' name="removeCourtButton">Remove Court</button>
+                        <button id='resetButton' name="signUpButton">Reset System</button>
+                    </div>
+                    <br>
+                    <div class="formSubmit">
+                        <input type="password" name="adminPassword" id="adminPassword" placeholder="Admin Password"/>
+                        &nbsp;&nbsp;
+                        <input type="text" name="adminSelect" id="adminSelect" placeholder="Court Name">
                     </div>
                 </form>
             </div>
 
+            
             <div id="remove">
                     <h2>Remove From Queue</h2>
                     <form id="removeForm" method="post" action="">
@@ -177,11 +193,11 @@
                         <br><br>
                     </form>
                     <div class="formSubmit">
-                        <select name="Select Court" id="selectCourtAdd">
-                            <option value="Court 1">Court 1</option>
+                        <select name="Select Court" id="selectCourtRemove">
+                            <!-- <option value="Court 1">Court 1</option>
                             <option value="Court 2">Court 2</option>
                             <option value="Court 3">Court 3</option>
-                            <option value="Court 4">Court 4</option>
+                            <option value="Court 4">Court 4</option> -->
                         </select>
                         <button type="submit" id="removeButton">Remove From Court</button>
                     </div>
