@@ -1,10 +1,13 @@
+import Timer from "./easytimer.js";
+
 class Queue {
     constructor(name) {
         this.name = name;
         this.groups = [];
         this.currentGroup = null;
-        this.timeRemaining = null;
+        this.timer = new Timer();
         this.size = 4;
+        this.id = name.replace(/\s/g, "");
     }
 
     push(group) {
@@ -14,6 +17,17 @@ class Queue {
             this.currentGroup = group;
         } else {
             this.groups.push(group);
+            this.timer.start({countdown: true, startValues: {seconds: 30}});
+
+            $(`#${this.id}Timer .values`).html(timer.getTimeValues().toString());
+
+            this.timer.addEventListener('secondsUpdated', function (e) {
+                $(`#${this.id}Timer .values`).html(timer.getTimeValues().toString());
+            });
+            
+            this.timer.addEventListener('targetAchieved', function (e) {
+                $(`#${this.id}Timer .values`).html('KABOOM!!');
+            });
         }
     }
 

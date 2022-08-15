@@ -1,11 +1,13 @@
 import Player from "./Player.js"
 import Queue from "./Queue.js"
-import System from "./System.js"
+import System from "./System.js" 
 
 var numCourts = 4;
 var queues = {};
 var players = {};
 const PASSWORD = 'a';
+const PLAYER_CAPACITY = 100;
+const courtTime = 3600;
 
 /**
  * Adds a new court queue to the system.
@@ -16,35 +18,40 @@ function addQueue(e) {
     let courtName = document.querySelector("#adminSelect").value;
     let pass = document.querySelector("#adminPassword").value;
 
-    if (pass === PASSWORD && !(courtName in queues)) {
+    if (pass === PASSWORD && !(courtName in queues) && courtName !== "") {
         let q = new Queue(courtName);
         queues[courtName] = q;
 
-        document.querySelector('.queue').innerHTML += `<table id='${courtName}'>
+        //replaces spaces in the courtname with nothing for elementID purposes. g is a modifier that applies to all matches, not just 1st.
+        let strippedName = courtName.replace(/\s/g, "");
+
+        document.querySelector('.queue').innerHTML += `<table id='${strippedName}'>
         <tr>
-            <td style="text-align:center" colspan="2">Time</td>
+            <td style="text-align:center" colspan="2" id='${strippedName}Timer'>Time</td>
         </tr>
         <tr>
             <td style="text-align:center" colspan="2">${courtName}</td>
         </tr>
         <tr>
-            <td id='${courtName}Current'>On Court: </td>
+            <td id='${strippedName}Current'>On Court: </td>
         </tr>
         <tr>
-            <td id='${courtName}First'>1.</td>
+            <td id='${strippedName}First'>1.</td>
         </tr>
         <tr>
-            <td id='${courtName}Second'>2.</td>
+            <td id='${strippedName}Second'>2.</td>
         </tr>
         <tr>
-            <td id='${courtName}Third'>3.</td>
+            <td id='${strippedName}Third'>3.</td>
         </tr>
         </table>`;
 
-        document.querySelector("#selectCourtAdd").innerHTML += `<option value="${courtName}">${courtName}</option>`;
-        document.querySelector("#selectCourtRemove").innerHTML += `<option value="${courtName}">${courtName}</option>`;
-    } else if (pass != PASSWORD){
+        document.querySelector("#selectCourtAdd").innerHTML += `<option value="${courtName}" id="${strippedName}AddDrop">${courtName}</option>`;
+        document.querySelector("#selectCourtRemove").innerHTML += `<option value="${courtName}" id="${strippedName}RemoveDrop">${courtName}</option>`;
+    } else if (pass !== PASSWORD){
         alert('Invalid password. Please try again.');
+    } else if (courtName === "") {
+        alert('Court name cannot be empty. Please enter a different name.');
     } else {
         alert('A court with the name ' + courtName + ' already exists. Please enter a different court name.');
     }
@@ -63,7 +70,11 @@ function removeQueue(e) {
 
     if (pass === PASSWORD && courtName in queues) {
         delete queues[courtName];
-        document.querySelector(`#${courtName}`).remove();
+        let strippedName = courtName.replace(/\s/g, "");
+        document.querySelector(`#${strippedName}`).remove();
+
+        document.querySelector(`#${strippedName}AddDrop`).remove();
+        document.querySelector(`#${strippedName}RemoveDrop`).remove();
     } else if (pass != PASSWORD){
         alert('Invalid password. Please try again.');
     } else {
@@ -96,6 +107,8 @@ function signUpPlayer(e) {
         alert('Another player with that name already exists. Please select a different name.');
     } else if (name === "") {
         alert('You cannot enter an empty name. Please select a different name with letters.');
+    } else if (Object.keys(players).length >= PLAYER_CAPACITY) {
+        alert('Cannot add player to system. The system is full. Please contact the admin for help.');
     } else {
         let p = new Player(name);
         players[name] = p;
@@ -151,24 +164,32 @@ function clearCourts() {
  */
  function resetSystem(e) {
     e.preventDefault();
+
+    let pass = document.querySelector("#adminPassword").value;
+
+    if (pass === PASSWORD) {
+        clearPlayers();
+        clearCourts();
     
-    clearPlayers();
-    clearCourts();
+        let allQueues = document.querySelector('#queues');
+        let addChoices = document.querySelector('#selectCourtAdd');
+        let removeChoices = document.querySelector('#selectCourtRemove');
+    
+        while (allQueues.lastChild) {
+            allQueues.removeChild(allQueues.lastChild);
+        }
+    
+        while (addChoices.lastChild) {
+            addChoices.removeChild(addChoices.lastChild);
+        }
+    
+        while (removeChoices.lastChild) {
+            removeChoices.removeChild(removeChoices.lastChild);
+        }
 
-    let allQueues = document.querySelector('#queues');
-    let addChoices = document.querySelector('#selectCourtAdd');
-    let removeChoices = document.querySelector('#selectCourtRemove');
-
-    while (allQueues.lastChild) {
-        allQueues.removeChild(allQueues.lastChild);
-    }
-
-    while (addChoices.lastChild) {
-        addChoices.removeChild(addChoices.lastChild);
-    }
-
-    while (removeChoices.lastChild) {
-        removeChoices.removeChild(removeChoices.lastChild);
+        alert('Successfully reset the system.');
+    } else {
+        alert('Invalid password. Please try again.');
     }
 }
 
@@ -209,16 +230,18 @@ function pushPlayers(e) {
     //n = false if any credentials are false. otherwise, returns a list of players to add to the queue.
     let n = validNames(credentials, false);
     let courtName = document.querySelector('#selectCourtAdd').value;
+    let strippedName = courtName.replace(/\s/g, "");
     let q = queues[courtName];
 
     if (n) {
         q.push(n);
+        alert('Successfully added ' + n + ' to ' + courtName);
     } else {
         return;
     }
     
     //adds the current players to the front end
-    document.querySelector(`#${courtName}Current`).innerHTML += q.currentGroupString();
+    document.querySelector(`#${strippedName}Current`).innerHTML += q.currentGroupString();
 
     //resets the form's fields to be empty
     document.querySelector('#addForm').reset();
