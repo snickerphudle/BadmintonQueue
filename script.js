@@ -36,13 +36,13 @@ function addQueue(e) {
             <td id='${strippedName}Current'>On Court: </td>
         </tr>
         <tr>
-            <td id='${strippedName}First'>1.</td>
+            <td id='${strippedName}1'>1.</td>
         </tr>
         <tr>
-            <td id='${strippedName}Second'>2.</td>
+            <td id='${strippedName}2'>2.</td>
         </tr>
         <tr>
-            <td id='${strippedName}Third'>3.</td>
+            <td id='${strippedName}3'>3.</td>
         </tr>
         </table>`;
 
@@ -233,20 +233,17 @@ function pushPlayers(e) {
     let strippedName = courtName.replace(/\s/g, "");
     let q = queues[courtName];
 
+    //if the credentials are correct, push the players to the court.
     if (n) {
         q.push(n);
         alert('Successfully added ' + n + ' to ' + courtName);
     } else {
         return;
     }
-    
-    //adds the current players to the front end
-    document.querySelector(`#${strippedName}Current`).innerHTML += q.currentGroupString();
 
     //resets the form's fields to be empty
     document.querySelector('#addForm').reset();
 }
-
 
 /**
  * Returns the list of valid names if the following criteria are met:
@@ -256,37 +253,48 @@ function pushPlayers(e) {
  */
 function validNames(credentials, isMerging) {
     load()
-    let playerCount = 0;
     let validNames = [];
+    let playerCount = 0;
+
+    for (let i = 0; i < credentials.length; i++) {
+        let c = credentials[i];
+        if (c.name !== '') {
+            playerCount++;
+        } else {
+            break;
+        }
+    }
+
+    if (playerCount == 1 || playerCount == 3) {
+        alert('You must enter the username and password for 2 or 4 people to add to a queue. Please try again.');
+        return false;
+    }
 
     //loops through all the credentials
-    for (let i = 0; i < credentials.length; i++) {
+    for (let i = 0; i < playerCount; i++) {
         //if the name entered is not in the system, exit
         let c = credentials[i];
-        if (!c.name in players || c.name === '') {
+        if (!c.name in players) {
             alert('The name ' + c.name + ' is not in the system. Please try again.');
             return false;
         }
 
-        //if the name is not empty, validate the password
-        if (c.name != '') {
-            playerCount++;
-            if (c.password != players[c.name].password) {
-                alert('The password for the player ' + c.name + ' is invalid. Please try again.');
-                return false;
-            }
-            validNames.push(c.name);
+
+        //exit if password is incorrect
+        if (c.password != players[c.name].password) {
+            alert('The password for the player ' + c.name + ' is invalid. Please try again.');
+            return false;
         }
+        validNames.push(c.name);
     }
 
     //if merging to a court, data for exactly 2 people must be sent.
     if (isMerging && playerCount != 2) {
         alert('You can only merge to a court with exactly 2 people. Please try again.');
         return false;
-    } else if (playerCount == 1 || playerCount == 3) {
-        alert('You can only join a queue with 2 or 4 people. Please try again with the correct number of people.');
-        return false;
-    }
+    } 
+
+    console.log(validNames);
 
     return validNames;
 }
