@@ -48,8 +48,7 @@
                         <br><br>
 
                         <div class="formSubmit">
-                            <select name="Select Court" id="selectCourtAdd">
-                            </select>
+                            <select name="Select Court" id="selectCourtAdd"></select>
                             <button id="mergeButton">Merge to Court</button>
                             <button id="joinButton">Join Queue</button>
                         </div>
@@ -87,30 +86,32 @@
             <div id="remove">
                     <h2>Remove From Queue</h2>
                     <form id="removeForm" method="post" action="">
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+                        <label for="removeName1">Name</label>
+                        <input type="text" name="removeName1" id="removeName1">
+                        <label for="removePass1">Password</label>
+                        <input type="password" name="removePass1" id="removePass1">
                         <br><br>
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+
+                        <label for="removeName2">Name</label>
+                        <input type="text" name="removeName2" id="removeName2">
+                        <label for="removePass2">Password</label>
+                        <input type="password" name="removePass2" id="removePass2">
                         <br><br>
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+
+                        <label for="removeName3">Name</label>
+                        <input type="text" name="removeName3" id="removeName3">
+                        <label for="removePass3">Password</label>
+                        <input type="password" name="removePass3" id="removePass3">
                         <br><br>
-                        Name
-                        <input type="text" name="Name">
-                        Password
-                        <input type="password" name="Password">
+
+                        <label for="removeName4">Name</label>
+                        <input type="text" name="removeName4" id="removeName4">
+                        <label for="removePass4">Password</label>
+                        <input type="password" name="removePass4" id="removePass4">
                         <br><br>
                     </form>
                     <div class="formSubmit">
-                        <select name="Select Court" id="selectCourtRemove">
-                        </select>
+                        <select name="Select Court" id="selectCourtRemove"></select>
                         <button type="submit" id="removeButton">Remove From Court</button>
                     </div>
             </div>
