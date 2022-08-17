@@ -3,7 +3,7 @@ import Timer from "./easytimer.js";
 class Queue {
     
     /** Default time in seconds that each court lasts for. */
-    static COURT_TIME = 20;
+    static COURT_TIME = 30;
 
     /**
      * Constructs a new queue.
@@ -15,6 +15,7 @@ class Queue {
         this.timer = new Timer();
         this.size = 4;
         this.id = name.replace(/\s/g, "");
+        this.timerInitialized = false;
     }
 
     /**
@@ -31,7 +32,7 @@ class Queue {
             this.resetTimer();
 
             //updates the front end with the players on the court
-            document.querySelector(`#${this.id}Current`).innerHTML = 'On Court: ' + this.currentGroupString();
+            this.updateFrontend();
 
         } else {
             this.groups.push(group);
@@ -47,6 +48,8 @@ class Queue {
      * Removes the currentGroup from the queue and replaces it with the next group in line. Resets the timer.
      */
     pop() {
+        console.log('current group before popping: ', this.currentGroup);
+        console.log('groups in queue before popping: ', this.groups);
         if (this.currentGroup == null) {
             return;
         } else if (this.groups.length > 0) {
@@ -57,23 +60,32 @@ class Queue {
             this.currentGroup = null;
             this.updateFrontend();
         }
+        console.log('current group after popping: ', this.currentGroup);
+        console.log('groups in queue after popping: ', this.groups);
     }
+
+    /**
+     * Removes the group from the queue with the specified names.
+     */
+     pop(group) {
+        //FIXME
+        
+        this.updateFrontend();
+     }
 
     /**
      * Merges a group of 2 players to a queue.
      */
     merge(group) {
-        if (this.currentGroup.length > 2) {
-            alert('Can only merge to courts with 2 players currently playing.');
-        } else if (group.length != 2) {
+        if (group.length != 2) {
             alert('The group merging must have exactly 2 players.');
+        } else if (this.currentGroup == null) {
+            this.push(group)
+        } else if (this.currentGroup.length > 2) {
+            alert('Can only merge to courts with 2 players currently playing.');
         } else {
-            if (this.currentGroup == null) {
-                this.push(group)
-            } else {
-                this.currentGroup.push(group[0], group[1]);
+            this.currentGroup.push(group[0], group[1]);
                 this.updateFrontend();
-            }
         }
     }
 
@@ -85,9 +97,6 @@ class Queue {
             document.querySelector(`#${this.id}Current`).innerHTML = 'On Court: ';
         } else {
             document.querySelector(`#${this.id}Current`).innerHTML = 'On Court: ' + this.currentGroupString();
-
-            console.log('current group: ', this.currentGroup);
-            console.log('groups in queue: ', this.groups);
 
             for (let i = 1; i < 4; i++) {
                 document.querySelector(`#${this.id + i}`).innerHTML = i + '. ' + this.groupString(i)
@@ -126,15 +135,20 @@ class Queue {
         //Display the current time remaining
         timerHTML.innerHTML = t.getTimeValues().toString();
 
-        //update the timerHTML on the page every second
-        t.addEventListener('secondsUpdated', function (e) {
-            timerHTML.innerHTML = t.getTimeValues().toString();
-        });
 
-        //execute this function once time runs out
-        t.addEventListener('targetAchieved', function (e) {
-            q.pop();
-        });
+        if (!this.timerInitialized) {
+            //update the timerHTML on the page every second
+            t.addEventListener('secondsUpdated', function (e) {
+                timerHTML.innerHTML = t.getTimeValues().toString();
+            });
+
+            //execute this function once time runs out
+            t.addEventListener('targetAchieved', function (e) {
+                q.pop();
+            });
+
+            this.timerInitialized = true;
+        }
     }
 
     /**

@@ -205,6 +205,60 @@ function clearCourts() {
  */
 function pushPlayers(e) {
     e.preventDefault();
+
+    //n = false if any credentials are false. otherwise, returns a list of players to add to the queue.
+    let names = validNames(false);
+    let courtName = document.querySelector('#selectCourtAdd').value;
+    let q = queues[courtName];
+
+    //if the credentials are correct, push the players to the court.
+    if (names) {
+        q.push(names);
+        alert('Successfully added ' + names + ' to ' + courtName);
+    } else {
+        return;
+    }
+
+    //resets the form's fields to be empty
+    document.querySelector('#addForm').reset();
+}
+
+/**
+ * Merges players to the queue if the button "Merge to Court" is clicked and the credentials are correct.
+ */
+function mergePlayers(e) {
+    e.preventDefault();
+
+    //validates credentials before proceeding
+    let names = validNames(true);
+    let courtName = document.querySelector('#selectCourtAdd').value;
+    let q = queues[courtName];
+
+    //if the credentials are correct, merge the players to the court.
+    if (names) {
+        q.merge(names);
+        alert('Successfully merged ' + names + ' to ' + courtName);
+    } else {
+        return;
+    }
+
+    //resets the form's fields to be empty
+    document.querySelector('#addForm').reset();
+}
+
+function removePlayers(e) {
+    e.preventDefault();
+
+
+}
+
+/**
+ * Returns the list of valid names if the following criteria are met:
+ * 1. The name entered is in the system (players dictionary).
+ * 2. The password for the specified name matches the password entered.
+ * 3. Data for exactly 2 or 4 people is sent.
+ */
+function validNames(isMerging) {
     load();
 
     //gets credentials from the page
@@ -227,32 +281,6 @@ function pushPlayers(e) {
         }
     ];
 
-    //n = false if any credentials are false. otherwise, returns a list of players to add to the queue.
-    let n = validNames(credentials, false);
-    let courtName = document.querySelector('#selectCourtAdd').value;
-    let strippedName = courtName.replace(/\s/g, "");
-    let q = queues[courtName];
-
-    //if the credentials are correct, push the players to the court.
-    if (n) {
-        q.push(n);
-        alert('Successfully added ' + n + ' to ' + courtName);
-    } else {
-        return;
-    }
-
-    //resets the form's fields to be empty
-    document.querySelector('#addForm').reset();
-}
-
-/**
- * Returns the list of valid names if the following criteria are met:
- * 1. The name entered is in the system (players dictionary).
- * 2. The password for the specified name matches the password entered.
- * 3. Data for exactly 2 or 4 people is sent.
- */
-function validNames(credentials, isMerging) {
-    load()
     let validNames = [];
     let playerCount = 0;
 
@@ -294,15 +322,13 @@ function validNames(credentials, isMerging) {
         return false;
     } 
 
-    console.log(validNames);
-
     return validNames;
 }
 
 document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById('joinButton').addEventListener('click', pushPlayers);
-    //document.getElementById('mergeButton').addEventListener('click', //FIXME);
-    //document.getElementById('removeButton').addEventListener('click', //FIXME);
+    document.getElementById('mergeButton').addEventListener('click', mergePlayers);
+    document.getElementById('removeButton').addEventListener('click', removePlayers);
     document.getElementById('signUpButton').addEventListener('click', signUpPlayer);
     document.getElementById('addCourtButton').addEventListener('click', addQueue);
     document.getElementById('removeCourtButton').addEventListener('click', removeQueue);
