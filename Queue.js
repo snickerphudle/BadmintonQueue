@@ -67,7 +67,7 @@ class Queue {
     /**
      * Removes the group from the queue with the specified names.
      */
-     pop(group) {
+     remove(group) {
         //FIXME
         
         this.updateFrontend();

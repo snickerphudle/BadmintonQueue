@@ -207,7 +207,7 @@ function pushPlayers(e) {
     e.preventDefault();
 
     //n = false if any credentials are false. otherwise, returns a list of players to add to the queue.
-    let names = validNames(false);
+    let names = validNames(false, false);
     let courtName = document.querySelector('#selectCourtAdd').value;
     let q = queues[courtName];
 
@@ -230,7 +230,7 @@ function mergePlayers(e) {
     e.preventDefault();
 
     //validates credentials before proceeding
-    let names = validNames(true);
+    let names = validNames(true, false);
     let courtName = document.querySelector('#selectCourtAdd').value;
     let q = queues[courtName];
 
@@ -246,11 +246,29 @@ function mergePlayers(e) {
     document.querySelector('#addForm').reset();
 }
 
+/**
+ * Removes the players specified if the button "Remove From Court" is clicked and the credentials are correct.
+ */
 function removePlayers(e) {
     e.preventDefault();
 
+    //validates credentials before proceeding
+    let names = validNames(false, true);
+    let courtName = document.querySelector('#selectCourtRemove').value;
+    let q = queues[courtName];
+    
+    //if the credentials are correct, merge the players to the court.
+    if (names) {
+        q.remove(names);
+        alert('Successfully removed ' + names + ' from ' + courtName);
+    } else {
+        return;
+    }
 
+    //resets the form's fields to be empty
+    document.querySelector('#addForm').reset();
 }
+
 
 /**
  * Returns the list of valid names if the following criteria are met:
@@ -258,28 +276,51 @@ function removePlayers(e) {
  * 2. The password for the specified name matches the password entered.
  * 3. Data for exactly 2 or 4 people is sent.
  */
-function validNames(isMerging) {
+function validNames(isMerging, isRemoving) {
     load();
+    let credentials = null;
 
     //gets credentials from the page
-    let credentials = [
-        {
-            name: document.querySelector('#addName1').value,
-            password: document.querySelector('#addPass1').value
-        },
-        {
-            name: document.querySelector('#addName2').value,
-            password: document.querySelector('#addPass2').value
-        },
-        {
-            name: document.querySelector('#addName3').value,
-            password: document.querySelector('#addPass3').value
-        },
-        {
-            name: document.querySelector('#addName4').value,
-            password: document.querySelector('#addPass4').value
-        }
-    ];
+
+    if (isRemoving) {
+        credentials = [
+            {
+                name: document.querySelector('#removeName1').value,
+                password: document.querySelector('#removePass1').value
+            },
+            {
+                name: document.querySelector('#removeName2').value,
+                password: document.querySelector('#removePass2').value
+            },
+            {
+                name: document.querySelector('#removeName3').value,
+                password: document.querySelector('#removePass3').value
+            },
+            {
+                name: document.querySelector('#removeName4').value,
+                password: document.querySelector('#removePass4').value
+            }
+        ];
+    } else {
+        credentials = [
+            {
+                name: document.querySelector('#addName1').value,
+                password: document.querySelector('#addPass1').value
+            },
+            {
+                name: document.querySelector('#addName2').value,
+                password: document.querySelector('#addPass2').value
+            },
+            {
+                name: document.querySelector('#addName3').value,
+                password: document.querySelector('#addPass3').value
+            },
+            {
+                name: document.querySelector('#addName4').value,
+                password: document.querySelector('#addPass4').value
+            }
+        ];
+    }
 
     let validNames = [];
     let playerCount = 0;
